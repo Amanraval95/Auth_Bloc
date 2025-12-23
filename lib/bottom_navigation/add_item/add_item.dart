@@ -4,15 +4,14 @@ import 'package:auth_bloc/bottom_navigation/add_item/add_item_bloc/item_state.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// class AddItem extends StatefulWidget {
-//   const AddItem({super.key});
-//
-//   @override
-//   State<AddItem> createState() => _AddItemState();
-// }
-//
-// class _AddItemState extends State<AddItem> {
-class AddItem extends StatelessWidget {
+class AddItem extends StatefulWidget {
+  const AddItem({super.key});
+
+  @override
+  State<AddItem> createState() => _AddItemState();
+}
+
+class _AddItemState extends State<AddItem> {
   final _nameController = TextEditingController();
   bool showList = false;
 
@@ -65,7 +64,7 @@ class AddItem extends StatelessWidget {
                                 final name = _nameController.text.trim();
                                 if (name.isNotEmpty) {
                                   context.read<ItemBloc>().add(
-                                    AddItemEvent(name),
+                                    AddItemEvent(name, items: []),
                                   );
 
                                   _nameController.clear();

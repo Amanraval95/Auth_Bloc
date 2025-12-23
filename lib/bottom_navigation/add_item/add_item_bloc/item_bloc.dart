@@ -20,7 +20,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
             final items = snapshot.docs.map((d) {
               return {"id": d.id, ...d.data()};
             }).toList();
-            add(ItemsUpdatedEvent(items));
+            emit(ItemLoaded(items: items, itemloaded: false));
           });
     });
     on<AddItemEvent>((event, emit) async {
@@ -42,10 +42,9 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
       // NAME ADDED TO LIST
       await ref.add({"name": event.name});
       emit(ItemAdded());
+      emit(ItemLoaded(items: event.items, itemloaded: true));
     });
-    on<ItemsUpdatedEvent>((event, emit) {
-      emit(ItemLoaded(event.items));
-    });
+
     on<DeleteItemEvent>((event, emit) async {
       await FirebaseFirestore.instance
           .collection("user")

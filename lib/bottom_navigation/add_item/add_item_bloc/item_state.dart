@@ -15,8 +15,9 @@ class ItemDeleted extends ItemState {}
 class ItemLoading extends ItemState {}
 
 class ItemLoaded extends ItemState {
+  bool itemloaded = false;
   final List<Map<String, dynamic>> items;
-  const ItemLoaded(this.items);
+  ItemLoaded({required this.items, required this.itemloaded});
   @override
   List<Object?> get props => [items];
 }
