@@ -35,7 +35,6 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
           .get();
       if (exists.docs.isNotEmpty) {
         emit(ItemAlreadyExists());
-        // add(LoadItemsEvent());
 
         return;
       }
@@ -54,7 +53,6 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
           .collection("items")
           .doc(event.item_id)
           .delete();
-      emit(ItemDeleted());
     });
   }
   @override

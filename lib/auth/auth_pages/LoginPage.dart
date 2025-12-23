@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                               MaterialPageRoute(builder: (_) => SignupPage()),
                             ),
                             child: Text(
-                              "Dont have an Account ?",
+                              "Don't have an Account ?",
                               style: TextStyle(
                                 decoration: TextDecoration.underline,
                               ),
