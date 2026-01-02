@@ -1,6 +1,5 @@
-import 'package:auth_bloc/bottom_navigation/add_item/add_item.dart';
-import 'package:auth_bloc/bottom_navigation/add_item/add_item_bloc/item_bloc.dart';
-import 'package:auth_bloc/bottom_navigation/add_item/add_item_bloc/item_event.dart';
+import 'package:auth_bloc/bottom_navigation/add_item_and_client/add_client_bloc/client_bloc.dart';
+import 'package:auth_bloc/bottom_navigation/add_item_and_client/add_client_bloc/client_event.dart';
 import 'package:auth_bloc/bottom_navigation/bottom_nav_bloc/nav_event.dart';
 import 'package:auth_bloc/bottom_navigation/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +11,9 @@ import '../../bottom_navigation/bottom_nav_bloc/nav_state.dart';
 import '../auth/auth_bloc/auth_bloc.dart';
 import '../auth/auth_bloc/auth_state.dart';
 import '../auth/auth_pages/LoginPage.dart';
+import '../bottom_navigation/add_item_and_client/add_item.dart';
+import '../bottom_navigation/add_item_and_client/add_item_bloc/item_bloc.dart';
+import '../bottom_navigation/add_item_and_client/add_item_bloc/item_event.dart';
 
 class HomePage extends StatelessWidget {
   final List<Widget> pages = [AddItem(), Profile()];
@@ -27,6 +29,11 @@ class HomePage extends StatelessWidget {
           create: (_) =>
               ItemBloc(FirebaseAuth.instance.currentUser!.uid)
                 ..add(LoadItemsEvent()),
+        ),
+        BlocProvider(
+          create: (_) =>
+              ClientBloc(FirebaseAuth.instance.currentUser!.uid)
+                ..add(LoadClientEvent()),
         ),
       ],
       child: BlocListener<AuthBloc, AuthState>(
@@ -64,11 +71,11 @@ class HomePage extends StatelessWidget {
                   currentIndex: navstate.currentIndex,
                   items: const [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.add_box),
+                      icon: Icon(Icons.add_box, size: 32),
                       label: "Add",
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.person_pin_rounded),
+                      icon: Icon(Icons.person_pin_rounded, size: 32),
                       label: "profile",
                     ),
                   ],

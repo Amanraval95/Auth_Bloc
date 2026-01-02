@@ -10,8 +10,8 @@ class LoadItemsEvent extends ItemEvent {}
 
 class AddItemEvent extends ItemEvent {
   final String name;
-  final List<Map<String, dynamic>> items;
-  const AddItemEvent(this.name, {required this.items});
+  // final List<Map<String, dynamic>> items;
+  const AddItemEvent(this.name);
   @override
   List<Object?> get props => [name];
 }
@@ -19,6 +19,7 @@ class AddItemEvent extends ItemEvent {
 class ItemsUpdatedEvent extends ItemEvent {
   final List<Map<String, dynamic>> items;
   const ItemsUpdatedEvent(this.items);
+
   @override
   List<Object?> get props => [items];
 }

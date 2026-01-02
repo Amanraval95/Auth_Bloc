@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:auth_bloc/bottom_navigation/add_item/add_item_bloc/item_event.dart';
-import 'package:auth_bloc/bottom_navigation/add_item/add_item_bloc/item_state.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'item_event.dart';
+import 'item_state.dart';
 
 class ItemBloc extends Bloc<ItemEvent, ItemState> {
   final String userId;
@@ -20,8 +21,11 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
             final items = snapshot.docs.map((d) {
               return {"id": d.id, ...d.data()};
             }).toList();
-            emit(ItemLoaded(items: items, itemloaded: false));
+            add(ItemsUpdatedEvent(items));
           });
+    });
+    on<ItemsUpdatedEvent>((event, emit) {
+      emit(ItemLoaded(event.items));
     });
     on<AddItemEvent>((event, emit) async {
       final ref = FirebaseFirestore.instance
@@ -34,15 +38,14 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
           .limit(1)
           .get();
       if (exists.docs.isNotEmpty) {
-        emit(ItemAlreadyExists());
+        emit(ItemAlreadyExists(state.items));
 
         return;
       }
 
       // NAME ADDED TO LIST
       await ref.add({"name": event.name});
-      emit(ItemAdded());
-      emit(ItemLoaded(items: event.items, itemloaded: true));
+      emit(ItemAdded(state.items));
     });
 
     on<DeleteItemEvent>((event, emit) async {
@@ -52,6 +55,7 @@ class ItemBloc extends Bloc<ItemEvent, ItemState> {
           .collection("items")
           .doc(event.item_id)
           .delete();
+      emit(ItemDeleted(state.items));
     });
   }
   @override
