@@ -1,10 +1,10 @@
-import 'package:auth_bloc/Resuable_card/card.dart';
 import 'package:auth_bloc/bottom_navigation/add_item_and_client/add_client_bloc/client_bloc.dart';
 import 'package:auth_bloc/bottom_navigation/add_item_and_client/add_client_bloc/client_event.dart';
 import 'package:auth_bloc/bottom_navigation/add_item_and_client/add_client_bloc/client_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../Reuseable_card/card.dart';
 import 'add_item_bloc/item_bloc.dart';
 import 'add_item_bloc/item_event.dart';
 import 'add_item_bloc/item_state.dart';
