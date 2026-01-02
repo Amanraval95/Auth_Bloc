@@ -11,9 +11,9 @@ import '../../bottom_navigation/bottom_nav_bloc/nav_state.dart';
 import '../auth/auth_bloc/auth_bloc.dart';
 import '../auth/auth_bloc/auth_state.dart';
 import '../auth/auth_pages/LoginPage.dart';
-import '../bottom_navigation/add_item_and_client/add_item.dart';
 import '../bottom_navigation/add_item_and_client/add_item_bloc/item_bloc.dart';
 import '../bottom_navigation/add_item_and_client/add_item_bloc/item_event.dart';
+import '../bottom_navigation/add_item_and_client/add_page.dart';
 
 class HomePage extends StatelessWidget {
   final List<Widget> pages = [AddItem(), Profile()];
