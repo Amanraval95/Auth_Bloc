@@ -55,8 +55,10 @@ class CustomizeCard extends StatelessWidget {
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,
                       onTap: () {
-                        onAdd(controller.text.trim());
-                        controller.clear();
+                        if (controller.text.trim().isNotEmpty) {
+                          onAdd(controller.text.trim());
+                          controller.clear();
+                        }
                       },
                       child: Icon(Icons.add_circle, size: 32),
                     ),
@@ -84,8 +86,20 @@ class CustomizeCard extends StatelessWidget {
   }
 
   Widget _buildList() {
+    if (data.isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 20),
+        child: Center(
+          child: Text(
+            "EMPTY!",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+        ),
+      );
+    }
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: 310),
+
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: data.length,
@@ -100,7 +114,10 @@ class CustomizeCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: .spaceBetween,
                   children: [
-                    Text(name["name"].toUpperCase()),
+                    Text(
+                      name["name"].toUpperCase(),
+                      style: TextStyle(letterSpacing: 1.5, fontSize: 20),
+                    ),
                     InkWell(
                       highlightColor: Colors.transparent,
                       splashColor: Colors.transparent,

@@ -6,14 +6,14 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ClientBloc extends Bloc<ClientEvent, ClientState> {
-  String UserId;
+  String userId;
   StreamSubscription? _sub;
-  ClientBloc(this.UserId) : super(ClientLoading()) {
+  ClientBloc(this.userId) : super(ClientLoading()) {
     on<LoadClientEvent>((event, emit) async {
       await _sub?.cancel();
       _sub = FirebaseFirestore.instance
           .collection("user")
-          .doc(UserId)
+          .doc(userId)
           .collection("client")
           .snapshots()
           .listen((snapshot) {
@@ -29,7 +29,7 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
     on<AddClientEvent>((event, emit) async {
       final ref = FirebaseFirestore.instance
           .collection("user")
-          .doc(UserId)
+          .doc(userId)
           .collection("client");
       final exists = await ref
           .where("name", isEqualTo: event.name)
@@ -42,10 +42,10 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
       await ref.add({"name": event.name});
       emit(ClientAdded(state.client));
     });
-    on<DeleteClientEvent>((event, emit) {
-      FirebaseFirestore.instance
+    on<DeleteClientEvent>((event, emit) async {
+      await FirebaseFirestore.instance
           .collection("user")
-          .doc(UserId)
+          .doc(userId)
           .collection("client")
           .doc(event.client_id)
           .delete();
